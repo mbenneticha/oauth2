@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 from google.appengine.ext import ndb
+from google.appengine.api import urlfetch
 import logging
 import webapp2
+import urllib
 import json
 
 class OauthHandler(webapp2.RequestHandler):
@@ -11,6 +13,12 @@ class OauthHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write("hello")
+		data_to_post = {
+		'message': result.content
+		}
+		encoded_data = urllib.urlencode(data_to_post)
+		#send encoded application response to application-3
+		result = urlfetch.fetch(url_app_3, encoded_data, method='POST')
 
 app = webapp2.WSGIApplication([
 	('/', MainPage),
