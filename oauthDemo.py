@@ -4,9 +4,7 @@ import urllib
 
 from google.appengine.ext import ndb
 from google.appengine.api import users
-#from google.appengine.ext import template
-
-#from google.appengine.api import urlfetch
+from google.appengine.api import urlfetch
 
 import webapp2
 import jinja2
