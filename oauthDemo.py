@@ -34,7 +34,13 @@ class OauthHandler(webapp2.RequestHandler):
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		self.response.write("adele, hello.")
+		title = 'OAuth 2.0 Implementation'
+		course = 'CS 496'
+		description = 'By clicking on the following link, you are authorizing access to your name and email from Google. Click on the link below to authorize Google to give me that information. After clicking the link, we will display your full name, the URL we used to access your Google+ Account and the randomly generated token used to authorize access.'
+		redirect_url = 'https://python-gae-quickstart-164103.appspot.com/oauth'
+		link = "Go To {} (<a href="{}">Google's Page</a>)".format(redirect_url)
+		greeting = '{} \n {} \n {} \n {}'.format(title, course, description, link)
+		self.response.write('<html><body>{}</body></html>'.format())
 		#path = os.path.join(os.path.dirname(__file__), 'index.html')
 		#self.response.out.write(path)
 
