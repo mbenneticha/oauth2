@@ -1,64 +1,31 @@
 <!DOCTYPE html>
-{% autoescape true %}
 <html lang="en">
 <head>
   <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
   <title>OAuth 2.0 Implementation</title>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">App Engine Guestbook</a>
-          <div class="nav-collapse collapse pull-right">
-            <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
-          </div>
+        <div class="title">
+            <h1>OAuth 2.0 Implementation</h1>
+            <h2>CS 496</h2>
         </div>
-      </div>
-    </div>
-    <div class="container">
-      <!-- [START greetings] -->
-      {% for greeting in greetings %}
-      <div class="row">
-        {% if greeting.author %}
-          <b>{{ greeting.author.email }}
-            {% if user and user.user_id() == greeting.author.identity %}
-              (You)
-            {% endif %}
-          </b> wrote:
-        {% else %}
-          An anonymous person wrote:
-        {% endif %}
-        <blockquote>{{ greeting.content }}</blockquote>
-      </div>
-      {% endfor %}
-      <!-- [END greetings] -->
-
-      <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
-        <div><textarea name="content" class="input-block-level" rows="3"></textarea></div>
-        <div><input type="submit" class="btn btn-large btn-primary" value="Sign Guestbook"></div>
-      </form>
-
-      <hr>
-
-      <form>Guestbook name:
-        <input value="{{ guestbook_name }}" name="guestbook_name">
-        <input type="submit" value="switch">
-      </form>
-
-      <a href="{{ url|safe }}">{{ url_linktext }}</a>
-    </div>
-
-<!--<div class="container">
-<h2 class="text-center">OAuth 2.0 Implementation <small>CS496</small></h2>
-<p>By clicking the following link, you will be redirected to the Google OAuth 2.0 to login and allow this app access to your first and last name.</p>
-<p>After clicking the link, we will display your full name, the URL we used to access your Google+ Account and the State-Variable used to secure the original redirect. </p>
-</div> -->
+        <div class="description">
+            <p>
+            By clicking on the following link, you are authorizing access to your name and email from Google. Click on the link below to authorize Google to give me that information. After clicking the link, we will display your full name, the URL we used to access your Google+ Account and the randomly generated token used to authorize access.
+            </p>
+        </div>
+        <div class="link">
+            <a href="https://python-gae-quickstart-164103.appspot.com/signin">TAKE ME TO GOOGLE'S AUTHENTICATION REQUEST</a>
+        </div>
+    </body>
+<!--
+<body>
+	<a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+	<div class="container">
+	<h2 class="text-center">OAuth 2.0 Implementation <small>CS496</small></h2>
+	<p>By clicking the following link, you will be redirected to the Google OAuth 2.0 to login and allow this app access to your first and last name.</p>
+	<p>After clicking the link, we will display your full name, the URL we used to access your Google+ Account and the State-Variable used to secure the original redirect. </p>
+	</div>
 </body>
+-->
 </html>
-{% endautoescape %}
