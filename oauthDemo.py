@@ -17,6 +17,32 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+DEFAULT_GUESTBOOK_NAME = 'default_guestbook'
+
+def guestbook_key(guestbook_name=DEFAULT_GUESTBOOK_NAME):
+    """Constructs a Datastore key for a Guestbook entity.
+    We use guestbook_name as the key.
+    """
+    return ndb.Key('Guestbook', guestbook_name)
+
+
+# [START greeting]
+class Author(ndb.Model):
+    """Sub model for representing an author."""
+    identity = ndb.StringProperty(indexed=False)
+    email = ndb.StringProperty(indexed=False)
+
+
+class Greeting(ndb.Model):
+    """A main model for representing an individual Guestbook entry."""
+    author = ndb.StructuredProperty(Author)
+    content = ndb.StringProperty(indexed=False)
+    date = ndb.DateTimeProperty(auto_now_add=True)
+# [END greeting]
+
+
+# [START main_page]
+
 class OauthHandler(webapp2.RequestHandler):
 	def get(self):
 		logging.debug('The contents of the GET request are:' + repr(self.request.GET))
@@ -47,6 +73,25 @@ class MainPage(webapp2.RequestHandler):
 		template = JINJA_ENVIRONMENT.get_template('index.html')
 		self.response.write(template.render(template_values))
 
+# [START guestbook]
+class Guestbook(webapp2.RequestHandler):
+	def post(self):
+		# We set the same parent key on the 'Greeting' to ensure each
+		# Greeting is in the same entity group. Queries across the
+		# single entity group will be consistent. However, the write
+		# rate to a single entity group should be limited to
+		# ~1/second.
+		guestbook_name = self.request.get('guestbook_name', DEFAULT_GUESTBOOK_NAME)
+		greeting = Greeting(parent=guestbook_key(guestbook_name))
+
+		if users.get_current_user():
+			greeting.author = Author( identity=users.get_current_user().user_id(), email=users.get_current_user().email())
+			greeting.content = self.request.get('content')
+			greeting.put()
+		query_params = {'guestbook_name': guestbook_name}
+		self.redirect('/?' + urllib.urlencode(query_params))
+# [END guestbook]
+
 
 
 		#template_values = {
@@ -64,5 +109,6 @@ class MainPage(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
 	('/', MainPage),
-	('/oauth', OauthHandler)
+	('/sign', Guestbook)
+	#('/oauth', OauthHandler)
 ], debug=True)
