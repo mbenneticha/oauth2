@@ -40,7 +40,7 @@ class MainPage(webapp2.RequestHandler):
 		redirect_url = 'https://python-gae-quickstart-164103.appspot.com/oauth'
 		link = 'Go To (<a href="{}">Google</a>)'.format(redirect_url)
 		greeting = '{} \n {} \n {} \n {}'.format(title, course, description, link)
-		self.response.write('<html><body>{}</body></html>'.format())
+		self.response.write('<html><body>{}</body></html>'.format(greeting))
 		#path = os.path.join(os.path.dirname(__file__), 'index.html')
 		#self.response.out.write(path)
 
