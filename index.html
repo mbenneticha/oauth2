@@ -5,10 +5,25 @@
   <title>OAuth 2.0 Implementation</title>
 </head>
 <body>
-<div class="container">
+{% for greeting in greetings %}
+<div class="row">
+  {% if greeting.author %}
+    <b>{{ greeting.author.email }}
+      {% if user and user.user_id() == greeting.author.identity %}
+        (You)
+      {% endif %}
+    </b> wrote:
+  {% else %}
+    An anonymous person wrote:
+  {% endif %}
+  <blockquote>{{ greeting.content }}</blockquote>
+</div>
+{% endfor %}
+
+<!--<div class="container">
 <h2 class="text-center">OAuth 2.0 Implementation <small>CS496</small></h2>
 <p>By clicking the following link, you will be redirected to the Google OAuth 2.0 to login and allow this app access to your first and last name.</p>
 <p>After clicking the link, we will display your full name, the URL we used to access your Google+ Account and the State-Variable used to secure the original redirect. </p>
-</div>
+</div> -->
 </body>
 </html>
