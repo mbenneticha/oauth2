@@ -13,6 +13,7 @@ class OauthHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write("hello, good-bye, adele.")
+		path = os.path.join(os.path.dirname(__file__), 'index.html')
 		#data_to_post = {
 		#'message': result.content
 		#}
