@@ -12,7 +12,7 @@ class OauthHandler(webapp2.RequestHandler):
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		self.response.write("hello")
+		self.response.write("hello, good-bye, adele.")
 		#data_to_post = {
 		#'message': result.content
 		#}
