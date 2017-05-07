@@ -13,7 +13,12 @@ class OauthHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write("hello, good-bye, adele.")
+		template_values = {
+		'displayName': content_dict["displayName"],
+		'newURL': content_dict["url"]
+		}
 		path = os.path.join(os.path.dirname(__file__), 'index.html')
+		self.response.out.write(template.render(path, template_values))
 		#data_to_post = {
 		#'message': result.content
 		#}
