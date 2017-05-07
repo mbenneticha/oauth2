@@ -3,7 +3,7 @@ from google.appengine.ext import ndb
 #from google.appengine.api import urlfetch
 import logging
 import webapp2
-import urllib
+#import urllib
 import json
 
 class OauthHandler(webapp2.RequestHandler):
