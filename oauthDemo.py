@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 from google.appengine.ext import ndb
+from google.appengine.ext import template
 #from google.appengine.api import urlfetch
+import os
 import logging
 import webapp2
 #import urllib
