@@ -35,8 +35,8 @@ class OauthHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write("adele, hello.")
-		path = os.path.join(os.path.dirname(__file__), 'index.html')
-		self.response.out.write(template.render(path))
+		#path = os.path.join(os.path.dirname(__file__), 'index.html')
+		#self.response.out.write(path)
 
 
 
