@@ -29,9 +29,9 @@ class OauthHandler(webapp2.RequestHandler):
 		json_res = json.loads(res.content)
 		self.response.write(json_res)
 		auth_string = 'Bearer ' + json_res['access_token']
-		res2 = urllib2.Request('https://www.googleapis.com/plus/v1/people/me')
+		res2 = urllib.Request('https://www.googleapis.com/plus/v1/people/me')
 		res2.add_header('Authorization', auth_string)
-		json_res2 = urllib2.urlopen(res2)
+		json_res2 = urllib.urlopen(res2)
 		content = resp.read()
 		self.response.write(content)
 		n = content['name']
