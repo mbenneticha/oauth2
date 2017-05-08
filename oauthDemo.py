@@ -29,7 +29,11 @@ class OauthHandler(webapp2.RequestHandler):
 		res = urlfetch.fetch(url='https://www.googleapis.com/oauth2/v4/token', payload=enc, method=urlfetch.POST, headers=post_headers)
 		json_res = json.loads(res.content)
 		self.response.write(json_res)
-		token = json_res["access_token"]
+
+
+
+	def get(self):
+		token = self.response.get('access_token')
 		auth_header = {'Authorization': "Bearer " + token}
 		res2 = urlfetch.fetch(url='https://www.googleapis.com/plus/v1/people/me', method=urlfetch.GET, headers=auth_header)
 		json_res2 = json.loads(res2.content)
