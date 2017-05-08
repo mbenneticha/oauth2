@@ -28,7 +28,7 @@ class OauthHandler(webapp2.RequestHandler):
 		enc = urllib.urlencode(data)
 		res = urlfetch.fetch(url='https://www.googleapis.com/oauth2/v4/token', payload=enc, method=urlfetch.POST, headers=post_headers)
 		json_res = json.loads(res.content)
-		self.response.write(json_res)
+		#self.response.write(json_res)
 		token = json_res['access_token']
 		#token = self.response.get('access_token')
 		auth_header = {}
