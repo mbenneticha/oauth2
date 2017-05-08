@@ -29,17 +29,17 @@ class OauthHandler(webapp2.RequestHandler):
 		res = urlfetch.fetch(url='https://www.googleapis.com/oauth2/v4/token', payload=enc, method=urlfetch.POST, headers=post_headers)
 		json_res = json.loads(res.content)
 		#self.response.write(json_res)
-		token = json_res['access_token']
-		auth_header = {'Authorization': 'Bearer ' + token}
+		token = json_res["access_token"]
+		auth_header = {'Authorization': "Bearer " + token}
 		res2 = urlfetch.fetch(url='https://www.googleapis.com/plus/v1/people/me', method=urlfetch.GET, headers=auth_header)
 		json_res2 = json.loads(res2.content)
 
 		logging.info(json.dumps(json_res2))
 		template_values = {
 			'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
-			'user_fname': json_res2['name']['givenName'],
-			'user_lname': json_res2['name']['familyName'],
-			'user_URL': json_res2['url'],
+			'user_fname': json_res2["name"]["givenName"],
+			'user_lname': json_res2["name"]["familyName"],
+			'user_URL': json_res2["url"],
 			'secret': state
 			}
 		path = os.path.join(os.path.dirname(__file__), 'sign_in.html')
