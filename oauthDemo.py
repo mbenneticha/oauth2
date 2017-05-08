@@ -14,7 +14,7 @@ import httplib
 
 
 class OauthHandler(webapp2.RequestHandler):
-	def post(self):
+	def get(self):
 		code = self.request.get('code')
 		state = self.request.get('state')
 		data = { 'code':code,
@@ -27,14 +27,12 @@ class OauthHandler(webapp2.RequestHandler):
 		post_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 		enc = urllib.urlencode(data)
 		res = urlfetch.fetch(url='https://www.googleapis.com/oauth2/v4/token', payload=enc, method=urlfetch.POST, headers=post_headers)
-		json_res = json.loads(res.content)
+		json_res = json.loads(res.read())
 		self.response.write(json_res)
-
-
-
-	def get(self):
-		token = self.response.get('access_token')
-		auth_header = {'Authorization': "Bearer " + token}
+		token = json_res['access_token']
+		#token = self.response.get('access_token')
+		auth_header = {}
+		auth_header['Authorization'] = 'Bearer ' + token
 		res2 = urlfetch.fetch(url='https://www.googleapis.com/plus/v1/people/me', method=urlfetch.GET, headers=auth_header)
 		json_res2 = json.loads(res2.content)
 
@@ -49,32 +47,6 @@ class OauthHandler(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'sign_in.html')
 		self.response.write(template.render(path, template_values))
 
-		#get_headers = {'Authorization': 'Bearer ' + json_res['access_token']}
-		#res2 = urlfetch.fetch('https://www.googleapis.com/plus/v1/people/me', headers=get_headers)
-		#json_res2 = json.loads(res2.content)
-		#self.response.write(json_res2)
-		#n = json_res2['name']
-		#template_values = {
-		#	'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
-		#	'user_fname': n['givenName'],
-		#	'user_lname': n['familyName'],
-		#	'user_URL': json_res2['url'],
-		#	'secret': state
-		#	}
-
-
-		#res2 = urllib.Request('https://www.googleapis.com/plus/v1/people/me')
-		#res2.add_header('Authorization', auth_string)
-		#json_res2 = urllib.urlopen(res2)
-		#content = resp.read()
-		#self.response.write(content)
-		#n = content['name']
-		#template_values = {
-		#	'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
-		##	'user_lname': n['familyName'],
-		#	'user_URL': content['url'],
-		#	'secret': state
-		#	}
 
 
 class MainPage(webapp2.RequestHandler):
