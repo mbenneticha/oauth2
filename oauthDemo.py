@@ -27,9 +27,11 @@ class OauthHandler(webapp2.RequestHandler):
 		enc = urllib.urlencode(data)
 		res = urlfetch.fetch('https://www.googleapis.com/oauth2/v4/token', enc, urlfetch.POST, post_headers)
 		json_res = json.loads(res.content)
+		self.response.write(json_res)
 		get_headers = {'Authorization': 'Bearer ' + str(json_res['access_token'])}
 		res2 = urlfetch.fetch('https://www.googleapis.com/plus/v1/people/me', headers=get_headers)
 		json_res2 = json.loads(res2.content)
+		self.response.write(json_res2)
 		n = json_res2['name']
 		template_values = {
 			'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
