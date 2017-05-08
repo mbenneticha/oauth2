@@ -4,9 +4,10 @@ body{
 }
 
 title{
+	padding-top: 10px;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align:center
-	font-size:16pt;
+	font-size:32pt;
 }
 
 #mainTitle{
