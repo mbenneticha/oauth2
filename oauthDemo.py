@@ -28,6 +28,7 @@ class OauthHandler(webapp2.RequestHandler):
 
 		data={'code':code,'client_id':cid,'client_secret':sec,'redirect_uri':redirect,'grant_type':gt}
 		result = urlfetch.fetch(url='https://www.googleapis.com/oauth2/v4/token',payload=urllib.urlencode(data),method=urlfetch.POST,headers=head)
+		self.response.write(json.loads(result.content))
 
 
 
@@ -45,24 +46,7 @@ class MainPage(webapp2.RequestHandler):
 		#path = os.path.join(os.path.dirname(__file__), 'index.html')
 		#self.response.out.write(path)
 
-	def post(self):
-		headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-		PARAMS = {
-                'code': code,
-                'client_id': client_id,
-                'client_secret': client_secret,
-          }
-		try:
-			result = urlfetch.fetch(
-          		url=HTTP_REQUEST_URL,
-                payload=urllib.urlencode(PARAMS),
-                method=urlfetch.POST/GET/DELETE/...,
-                headers=headers
-                )
-		except urlfetch.Error as e:
-			logging.debug(e)
-
-		self.response.write(json.loads(result.content))
+	
 
 
 
