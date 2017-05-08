@@ -14,7 +14,7 @@ import httplib
 
 
 class OauthHandler(webapp2.RequestHandler):
-	def get(self):
+	def post(self):
 		code = self.request.get('code')
 		state = self.request.get('state')
 		data = { 'code':code,
