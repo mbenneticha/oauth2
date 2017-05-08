@@ -25,17 +25,17 @@ class OauthHandler(webapp2.RequestHandler):
 		data['code'] = str(code)
 		post_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 		enc = urllib.urlencode(data)
-		result = urlfetch.fetch('https://www.googleapis.com/oauth2/v4/token', enc, urlfetch.POST, post_headers)
-		json_result = json.loads(result.content)
-		get_headers = {'Authorization': str(str(json_result['token_type']) + ' ' + str(json_result['access_token']))}
-		result2 = urlfetch.fetch('https://www.googleapis.com/plus/v1/people/me', headers=get_headers)
-		json_result2 = json.loads(result2.content)
-		n = json_result2['name']
+		res = urlfetch.fetch('https://www.googleapis.com/oauth2/v4/token', enc, urlfetch.POST, post_headers)
+		json_res = json.loads(res.content)
+		get_headers = {'Authorization': str(str(json_res['token_type']) + ' ' + str(json_res['access_token']))}
+		res2 = urlfetch.fetch('https://www.googleapis.com/plus/v1/people/me', headers=get_headers)
+		json_res2 = json.loads(res2.content)
+		n = json_res2['name']
 		template_values = {
 			'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
 			'user_fname': n['givenName'],
 			'user_lname': n['familyName'],
-			'user_URL': json_result2['url'],
+			'user_URL': json_resu2['url'],
 			'secret': state
 			}
 		path = os.path.join(os.path.dirname(__file__), 'sign_in.html')
