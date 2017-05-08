@@ -52,17 +52,17 @@ class MainPage(webapp2.RequestHandler):
                 'client_id': client_id,
                 'client_secret': client_secret,
           }
-          try:
-          	result = urlfetch.fetch(
+		try:
+			result = urlfetch.fetch(
           		url=HTTP_REQUEST_URL,
                 payload=urllib.urlencode(PARAMS),
                 method=urlfetch.POST/GET/DELETE/...,
                 headers=headers
                 )
-          except urlfetch.Error as e:
-          	logging.debug(e)
+		except urlfetch.Error as e:
+			logging.debug(e)
 
-          self.response.write(json.loads(result.content))
+		self.response.write(json.loads(result.content))
 
 
 
