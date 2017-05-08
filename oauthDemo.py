@@ -33,8 +33,8 @@ class OauthHandler(webapp2.RequestHandler):
 		name = json_result2['name']
 		template_values = {
 			'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
-			'user_fname': n['givenName'],
-			'user_lname': n['familyName'],
+			'user_fname': name['givenName'],
+			'user_lname': name['familyName'],
 			'user_URL': json_result2['url'],
 			'secret': state
 			}
