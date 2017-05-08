@@ -17,12 +17,13 @@ class OauthHandler(webapp2.RequestHandler):
 	def get(self):
 		code = self.request.get('code')
 		state = self.request.get('state')
-		data = { 'client_id':'539287248398-hsq5ikfp43tem0edsfr2hl02otp01d6t.apps.googleusercontent.com',
-			'client_secret':'l_5sBiVk8S4MRdxj7CSOjN5L',
-			'redirect_uri':'https://python-gae-quickstart-164103.appspot.com/oauth',
-			'grant_type':'authorization_code'}
-			#,head = {'Content-Type': 'application/x-www-form-urlencoded'}
-		data['code'] = str(code)
+		data = { 'code':code,
+				'client_id':'539287248398-hsq5ikfp43tem0edsfr2hl02otp01d6t.apps.googleusercontent.com',
+				'client_secret':'l_5sBiVk8S4MRdxj7CSOjN5L',
+				'redirect_uri':'https://python-gae-quickstart-164103.appspot.com/oauth',
+				'grant_type':'authorization_code'
+				}
+		#data['code'] = str(code)
 		post_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 		enc = urllib.urlencode(data)
 		res = urlfetch.fetch(url='https://www.googleapis.com/oauth2/v4/token', payload=enc, method=urlfetch.POST, headers=post_headers)
@@ -36,11 +37,13 @@ class OauthHandler(webapp2.RequestHandler):
 		logging.info(json.dumps(json_res2))
 		template_values = {
 			'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
-			'user_fname': json_res2['name']['givenName'], \
-			'user_lname': json_res2['name']['familyName'], \
-			'user_URL': json_res2['url'], \
+			'user_fname': json_res2['name']['givenName'],
+			'user_lname': json_res2['name']['familyName'],
+			'user_URL': json_res2['url'],
 			'secret': state
 			}
+		path = os.path.join(os.path.dirname(__file__), 'sign_in.html')
+		self.response.write(template.render(path, template_values))
 
 		#get_headers = {'Authorization': 'Bearer ' + json_res['access_token']}
 		#res2 = urlfetch.fetch('https://www.googleapis.com/plus/v1/people/me', headers=get_headers)
@@ -68,12 +71,6 @@ class OauthHandler(webapp2.RequestHandler):
 		#	'user_URL': content['url'],
 		#	'secret': state
 		#	}
-
-
-		
-		path = os.path.join(os.path.dirname(__file__), 'sign_in.html')
-		self.response.write(template.render(path, template_values))
-
 
 
 class MainPage(webapp2.RequestHandler):
