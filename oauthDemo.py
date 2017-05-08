@@ -25,7 +25,7 @@ class OauthHandler(webapp2.RequestHandler):
 		data['code'] = str(code)
 		post_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 		enc = urllib.urlencode(data)
-		result = urlfetch.fetch(''https://www.googleapis.com/oauth2/v4/token', enc, urlfetch.POST, post_headers')
+		result = urlfetch.fetch('https://www.googleapis.com/oauth2/v4/token', enc, urlfetch.POST, post_headers)
 		json_result = json.loads(res.content)
 		get_headers = {'Authorization': str(str(json_result['token_type']) + ' ' + str(json_result['access_token']))}
 		result2 = urlfetch.fetch('https://www.googleapis.com/plus/v1/people/me', headers=get_headers)
