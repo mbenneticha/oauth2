@@ -37,8 +37,8 @@ class OauthHandler(webapp2.RequestHandler):
 		logging.info(json.dumps(json_res2))
 		template_values = {
 			'at': 'Here is your special verification code from me and your profile link to Google+. This was just a test of using OAuth to secure some of your info',
-			'user_fname': json_res2["name"]["givenName"],
-			'user_lname': json_res2["name"]["familyName"],
+			'user_fname': json_res2['displayName'],#json_res2["name"]["givenName"],
+			#'user_lname': json_res2["name"]["familyName"],
 			'user_URL': json_res2["url"],
 			'secret': state
 			}
